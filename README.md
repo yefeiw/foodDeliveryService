@@ -53,6 +53,8 @@ Each payment has a payment ID and a timestamp. If the payment is not successful 
 
 ### Rest API Diagram
 * Note: The optional parameters are listed as()
+
+
 | Domain  	| GET |  POST	|  PUT	|  DELETE	|
 |---	|---	|---	|---	|---	|
 | /provider  	|Get the information from all restaurants  	| Add the attached restaurants to the data base  	|  404 	| purge all restaurants from teh database  	|
