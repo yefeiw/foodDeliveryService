@@ -52,8 +52,8 @@ Each order contains the items ordered, quantity and unit price for each, address
 Each payment has a payment ID and a timestamp. If the payment is not successful for any reason, the payment ID will be an empty string.
 
 ### Rest API Diagram
-
-| Command | Description |
-| --- | --- |
-| git status | List all new or modified files |
-| git diff | Show file differences that haven't been staged |
+* Note: The optional parameters are listed as()
+| Domain | GET | POST | PUT | DELETE|
+| --- | --- | --- | --- |
+| /provider | Get the list of all restaurants | Add the list of restaurants in the payload to the database | 404  | purge all restaurants from the database |
+| /provider/{id}/ Get the information of one restaurant | 404 | Update information of this restaurant | remove this restaurant |
