@@ -18,17 +18,19 @@ payment is made successfully, it should return payment ID, timestamp and then th
 considered as completed so the user can see the estimated delivery time. 
 
 ### Assumptions
+1. There will only be one user as the user of this app. 
 
 1. There will only be one menu from a restaurant. (This is take-out, com'on)
 
-2. The ACID principles apply on payment. 
+1. The ACID principles apply on payment. 
 i.e. The user either completes the payment for his/her order in one payment 
 for the total amount or the payment is considered not completed. (No cost-sharing, down-payment, interest, etc.)
 
-3. The estimated delivery time is not guaranteed to be fulfilled. 
+1. The estimated delivery time is not guaranteed to be fulfilled. 
 It is up to the restaurant to determine how the order will be delivered. (Reserved for future enhancement)
 
-4. The restaurant has the responsibility to read, understand, and fulfill the diet restrictions. The delivery service merely informs the customer of the restrictions.
+1. The restaurant has the responsibility to read, understand, and fulfill the diet restrictions. 
+The delivery service merely informs the restaurant of the restrictions.
 (There is a lot of opportunity to enhance here for better user experience, but again, this is reserved for future enhancement)
 
 ## Structure
@@ -57,6 +59,29 @@ Each payment has a payment ID and a timestamp. If the payment is not successful 
 
 | Domain  	| GET |  POST	|  PUT	|  DELETE	|
 |---	|---	|---	|---	|---	|
+|**Restaurant**|
 | /provider  	|Get the information from all restaurants  	| Add the attached restaurants to the data base  	|  404 	| purge all restaurants from teh database  	|
 | /provider/{id}  	|  Get the information of the one restaurant 	| 404  	| modify the information of the current restaurant  	|  remove this restaurant from the database 	|
-|   	|   	|   	|   	|   	|
+| **Order**  	|   	|   	|   	|   	|
+|/order| Get all orders in the database| Add the attached orders to the database| 404 |purge all orders from the database|
+|/order/{id}| Get the order matching the ID| 404 | modify this order| remove this order 
+|**Payment**|  |  |  |  |
+|/payment| Get all payments | Add the attached payments| 404 | purge all payments|
+|/payment/{id}|Get information on the one payment| 404 | modify this payment |remove this payment
+
+
+## Build, Run and Test
+This sections covers the information to build, run and test this app.
+
+### Build
+
+dependency: maven
+```
+cd <project_root>
+mvn clean install
+```
+
+
+### Notes
+
+1. 
