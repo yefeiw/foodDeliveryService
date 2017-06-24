@@ -41,7 +41,7 @@ The will be introduced one by one.
 ### Key Domains 
 There are these several key domains in this project:
 
-1. Restaurant 
+1. demo.Restaurant 
 
 The restaurant is associated to one menu with multiple items. It stores all completed order and provides estimated delivery time.
 
@@ -59,7 +59,7 @@ Each payment has a payment ID and a timestamp. If the payment is not successful 
 
 | Domain  	| GET |  POST	|  PUT	|  DELETE	|
 |---	|---	|---	|---	|---	|
-|**Restaurant**|
+|**demo.Restaurant**|
 | /provider  	|Get the information from all restaurants  	| Add the attached restaurants to the data base  	|  404 	| purge all restaurants from teh database  	|
 | /provider/{id}  	|  Get the information of the one restaurant 	| 404  	| modify the information of the current restaurant  	|  remove this restaurant from the database 	|
 | **Order**  	|   	|   	|   	|   	|
