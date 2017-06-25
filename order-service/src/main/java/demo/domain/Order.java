@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -35,15 +36,20 @@ public class Order {
     //Total value of this order;
     private double total;
     // Status of this order
+    int status;
+    //Content of this order
+    List<OrderItem> content;
     @JsonCreator
     public Order(@JsonProperty("name") String customerName,
                       @JsonProperty("id") String providerID,
                       @JsonProperty("instruction") String instruction,
-                      @JsonProperty("address") String address) {
+                      @JsonProperty("address") String address,
+                 List<OrderItem> content) {
         this.customerName = customerName;
         this.instruction= instruction;
         this.providerID = providerID;
         this.address = address;
+        this.content = content;
     }
 
 }
