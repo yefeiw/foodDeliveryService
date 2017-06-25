@@ -11,10 +11,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.yefeiw</groupId>
     <artifactId>food-delivery-service</artifactId>
-    <version>1.0.0-BUILD-SNAPSHOT</version>j
+    <packaging>pom</packaging>
+    <version>1.0.0-BUILD-SNAPSHOT</version>
 
     <modules>
         <module>restaurant-service</module>
+        <module>order-service</module>
+        <module>payment-service</module>
     </modules>
 
     <properties>

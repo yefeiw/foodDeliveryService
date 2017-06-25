@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+
 /**
  * Created by vagrant on 6/23/17.
  */
@@ -15,35 +16,34 @@ import javax.persistence.*;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name="PROVIDER")
-public class Restaurant {
+@Table(name = "ORDER")
+public class Order {
     @Id
     @GeneratedValue
-    private int Id;
+    private String id;
 
-    //@OneToMany(mappedBy = "restaurant")
     //private Menu menu;
     @Embedded
-    //Name of the restaurant
-    private String name;
+    //Name of the customer
+    private String customerName;
     //ID used to find the restaurant, if there are multiple restaurants with the same name
     private String providerID;
-    //Introduction of a demo.domain.Restaurant
-    private String description;
+    //Special Instructions
+    private String instruction;
     //Location information of the restaurant
     private String address;
+    //Total value of this order;
+    private double total;
+    // Status of this order
     @JsonCreator
-    public Restaurant(@JsonProperty("name") String name,
+    public Order(@JsonProperty("name") String customerName,
                       @JsonProperty("id") String providerID,
-                      @JsonProperty("description") String description,
-                      @JsonProperty("address")String address) {
-        this.name = name;
-        this.description = description;
+                      @JsonProperty("instruction") String instruction,
+                      @JsonProperty("address") String address) {
+        this.customerName = customerName;
+        this.instruction= instruction;
         this.providerID = providerID;
         this.address = address;
     }
 
-//    public Menu getMenu() {
-//        return this.menu;
-//    }
 }

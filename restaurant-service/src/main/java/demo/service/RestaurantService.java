@@ -4,6 +4,7 @@ import demo.domain.Restaurant;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.*;
 /**
  * Created by yefeiw on 6/23/17.
  */
@@ -14,5 +15,5 @@ public interface RestaurantService {
     List<Restaurant> saveRestaurants(List<Restaurant> restaurants);
     void deleteById(String id);
     void deleteAll();
-    int update(Restaurant restaurant);
+//    int update(Restaurant restaurant);
 }
