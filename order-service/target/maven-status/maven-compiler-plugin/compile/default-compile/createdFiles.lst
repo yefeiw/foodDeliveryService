@@ -1,0 +1,5 @@
+demo/domain/OrderRepository.class
+demo/domain/OrderItem.class
+demo/rest/OrderServiceRestController.class
+demo/domain/Order.class
+demo/service/OrderService.class

@@ -1,7 +1,9 @@
 package demo.rest;
 
 import demo.domain.Order;
+import demo.domain.OrderItem;
 import demo.service.OrderService;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,7 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Created by yefeiw on 6/25/17.
@@ -36,7 +37,7 @@ public class OrderServiceRestController {
     }
 
     @RequestMapping(value = "/order", method = RequestMethod.POST)
-    List<Order> CreateOrders(@RequestBody  List<Order> payload) {
+    void CreateOrder(@RequestBody  List<OrderItem> payload) {
        this.orderService.createOrder(payload);
     }
 
@@ -54,7 +55,7 @@ public class OrderServiceRestController {
     void modifyByid(@PathVariable(value = "id")String id, @RequestBody int status) {
         Order order = this.orderService.getOrder(id);
         order.setStatus(status);
-        this.orderService.saveById(id);
+        this.orderService.save(order);
     }
 
 }

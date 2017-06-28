@@ -10,6 +10,4 @@ import org.springframework.data.repository.query.Param;
 
     public interface OrderRepository extends JpaRepository<Order,String> {
      Order findById(@Param("id")String id);
-     Order deleteById(@Param("id")String id);
-
     }

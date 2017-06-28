@@ -20,7 +20,6 @@ import java.util.List;
 @Table(name = "ORDER")
 public class Order {
     @Id
-    @GeneratedValue
     private String id;
 
     //private Menu menu;
@@ -40,11 +39,13 @@ public class Order {
     //Content of this order
     List<OrderItem> content;
     @JsonCreator
-    public Order(@JsonProperty("name") String customerName,
-                      @JsonProperty("id") String providerID,
+    public Order(@JsonProperty("id")String id,
+                        @JsonProperty("name") String customerName,
+                      @JsonProperty("providerID") String providerID,
                       @JsonProperty("instruction") String instruction,
                       @JsonProperty("address") String address,
                  List<OrderItem> content) {
+        this.id = id;
         this.customerName = customerName;
         this.instruction= instruction;
         this.providerID = providerID;
