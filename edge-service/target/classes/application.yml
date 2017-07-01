@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: edging-service
+zuul:
+  routes:
+    restaurant-service:
+      path: /restaurant-service/**
+      url: http://localhost:9000
+    order-service:
+      path: /order-service/**
+      url: http://localhost:9001
+    payment-service:
+      path: /payment-service/**
+      url: http://localhost:9002
