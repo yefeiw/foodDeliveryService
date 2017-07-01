@@ -9,29 +9,39 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 /**
  * Created by yefeiw on 6/23/17.
  */
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
-    @Autowired
     private RestaurantRepository repository;
+
+    @Autowired
+    public RestaurantServiceImpl(RestaurantRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public Page<Restaurant> findAll(Pageable pageable) {
-        return repository.findAll(pageable);
+        return this.repository.findAll(pageable);
     }
 
     @Override
     public Restaurant findById(String id) {
-        return repository.findByProviderID(id);
+        return this.repository.findByProviderID(id);
     }
 
     @Override
     public Page<Restaurant> findByName(String name, Pageable pageable) {
-        return repository.findAllByName(name,pageable);
+        return repository.findAllByName(name, pageable);
     }
-
+    @Override
+    public void addMenuItem(String providerID, Request request) {
+        List<MenuItem> menu = request.getItems();
+        Restaurant restaurant = this.repository.findByProviderID(providerID);
+        restaurant.
+    }
     @Override
     public List<Restaurant> saveRestaurants(List<Restaurant> restaurantList) {
         return repository.save(restaurantList);
@@ -47,15 +57,4 @@ public class RestaurantServiceImpl implements RestaurantService {
         repository.deleteAll();
     }
 
-//    @Override
-//    public int update(Restaurant restaurant) {
-//        if (repository.findOne(restaurant.getProviderID()) == null) {
-//            //not found;
-//            return 0;
-//        } else {
-//            repository.save(restaurant);
-//            return 1;
-//        }
-//
-//    }
 }

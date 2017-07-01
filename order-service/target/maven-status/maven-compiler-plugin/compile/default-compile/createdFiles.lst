@@ -7,4 +7,5 @@ demo/domain/OrderEventRepository.class
 demo/domain/OrderRepository.class
 demo/domain/OrderEventType.class
 demo/rest/OrderServiceRestController.class
+demo/domain/Invoice.class
 demo/service/OrderServiceImpl.class

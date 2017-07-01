@@ -4,7 +4,9 @@ import demo.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.List;
  */
 @Service
 public class OrderServiceImpl implements OrderService {
+    private final static String PAYMENT_URL = "https://localhost:9002/payment";
     @Autowired
     private OrderRepository orderRepository;
     private OrderEventRepository orderEventRepository;
@@ -48,9 +51,13 @@ public class OrderServiceImpl implements OrderService {
         this.orderRepository.save(order);
     }
     @Override
-    public void createOrder(List<OrderItem> itemList) {
-        Order newOrder = new Order("TBD", "TBD", "TBD", "TBD", "TBD",itemList);
-        this.orderRepository.save(newOrder);
+    public void createOrder(Order order) {
+        //step 1. Save the order to the database.
+        this.orderRepository.save(order);
+        //step2. Start paying the order
+        Invoice invoice = new Invoice(order.getId(),order.getTotal());
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity response = restTemplate.postForObject(PAYMENT_URL,invoice, ResponseEntity.class);
     }
 
     @Override

@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
 /**
  * Created by vagrant on 6/23/17.
  */
@@ -15,13 +13,12 @@ import javax.persistence.*;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name="PROVIDER")
+@Table(name = "PROVIDER")
 public class Restaurant {
     @Id
     @GeneratedValue
-    private int Id;
+    private String Id;
 
-    //@OneToMany(mappedBy = "restaurant")
     //private Menu menu;
     @Embedded
     //Name of the restaurant
@@ -32,18 +29,21 @@ public class Restaurant {
     private String description;
     //Location information of the restaurant
     private String address;
+    //Menu of this restaurant
+    private List<MenuItem> menu;
+
     @JsonCreator
     public Restaurant(@JsonProperty("name") String name,
                       @JsonProperty("id") String providerID,
                       @JsonProperty("description") String description,
-                      @JsonProperty("address")String address) {
+                      @JsonProperty("address") String address) {
         this.name = name;
         this.description = description;
         this.providerID = providerID;
         this.address = address;
     }
 
-//    public Menu getMenu() {
-//        return this.menu;
-//    }
+    public List<MenuItem> getMenu() {
+        return this.menu;
+    }
 }

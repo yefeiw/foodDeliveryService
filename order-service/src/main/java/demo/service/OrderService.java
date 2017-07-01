@@ -18,6 +18,6 @@ public interface OrderService {
     void deleteAll();
     void deleteById(String id);
     void save(Order order);
-    void createOrder(List<OrderItem> order);
+    void createOrder(Order order);
     boolean addOrderEvent(OrderEvent orderEvent);
 }

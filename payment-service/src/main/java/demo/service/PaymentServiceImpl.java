@@ -5,6 +5,8 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import demo.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -29,12 +31,15 @@ public class PaymentServiceImpl implements PaymentService {
     public Payment getPaymentById(String id) {
         return paymentRepository.findById(id);
     }
-
     @Override
-    public String createPayment(Payment payment) {
+    public Page<Payment> findAll(Pageable pageable) {
+        return paymentRepository.findAll(pageable);
+    }
+    @Override
+    public String createPayment(Invoice invoice) {
         String paymentId = null;
+        Payment payment = new Payment(invoice.getOrderId());
         try {
-
             //first, determine the payment status randomly
             int i = new Random().nextInt(2);
             if (i == 0) {

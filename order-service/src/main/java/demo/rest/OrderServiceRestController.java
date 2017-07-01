@@ -40,7 +40,7 @@ public class OrderServiceRestController {
     }
 
     @RequestMapping(value = "/order", method = RequestMethod.POST)
-    void CreateOrder(@RequestBody  List<OrderItem> payload) {
+    void CreateOrder(@RequestBody  Order payload) {
        this.orderService.createOrder(payload);
     }
 
@@ -60,9 +60,9 @@ public class OrderServiceRestController {
         order.setStatus(status);
         this.orderService.save(order);
     }
-    @RequestMapping(value = "/orders/events", method = RequestMethod.POST)
+    @RequestMapping(value = "/order/event", method = RequestMethod.POST)
     public ResponseEntity addOrderEvent(@RequestBody OrderEvent orderEvent) {
-        boolean result = orderService.addOrderEvent(orderEvent);
+        orderService.addOrderEvent(orderEvent);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 }

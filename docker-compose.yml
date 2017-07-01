@@ -1,0 +1,4 @@
+mongodb:
+  image: mongo:3.4.4
+  ports:
+    - "27017:27017"

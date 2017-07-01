@@ -25,7 +25,7 @@ public class Order {
     //Name of the customer
     private String customerName;
     //ID used to find the restaurant, if there are multiple restaurants with the same name
-    private String providerID;
+    private String providerId;
     //Special Instructions
     private String instruction;
     //Location information of the restaurant
@@ -39,14 +39,14 @@ public class Order {
     @JsonCreator
     public Order(@JsonProperty("id")String id,
                         @JsonProperty("name") String customerName,
-                      @JsonProperty("providerID") String providerID,
+                      @JsonProperty("providerId") String providerId,
                       @JsonProperty("instruction") String instruction,
                       @JsonProperty("address") String address,
                  @JsonProperty("list") List<OrderItem> content) {
         this.id = id;
         this.customerName = customerName;
         this.instruction= instruction;
-        this.providerID = providerID;
+        this.providerId = providerId;
         this.address = address;
         this.content = content;
         this.total = calculateTotal();
@@ -57,7 +57,7 @@ public class Order {
         for (OrderItem item : content) {
             ret += item.getPrice();
         }
-        return total;
+        return ret;
     }
 
 }

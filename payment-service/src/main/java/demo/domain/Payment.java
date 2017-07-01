@@ -12,17 +12,16 @@ public class Payment {
     @Id
     private String id;
 
-    private String userId;
-
     private String orderId;
     private PaymentStatus paymentStatus;
 
-
+    public Payment(String orderId) {
+        this.orderId = orderId;
+    }
     @Override
     public String toString() {
         return "Payment {" +
                 "paymentId='" + id + '\'' +
-                "userId='" + userId + '\'' +
                 "orderId='" + orderId + '\'' +
                 "paymentStatus='" + paymentStatus.toString() + '\'';
     }
