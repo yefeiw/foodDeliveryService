@@ -1,6 +1,7 @@
 package demo.service;
 
 import demo.domain.Order;
+import demo.domain.OrderEvent;
 import demo.domain.OrderItem;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,4 +19,5 @@ public interface OrderService {
     void deleteById(String id);
     void save(Order order);
     void createOrder(List<OrderItem> order);
+    boolean addOrderEvent(OrderEvent orderEvent);
 }

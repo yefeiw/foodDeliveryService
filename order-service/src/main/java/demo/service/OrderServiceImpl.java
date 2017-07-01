@@ -1,13 +1,12 @@
 package demo.service;
 
-import demo.domain.Order;
-import demo.domain.OrderItem;
-import demo.domain.OrderRepository;
+import demo.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,7 +16,13 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderRepository orderRepository;
+    private OrderEventRepository orderEventRepository;
 
+    @Autowired
+    public OrderServiceImpl(OrderRepository orderRepository, OrderEventRepository orderEventRepository) {
+        this.orderEventRepository = orderEventRepository;
+        this.orderRepository = orderRepository;
+    }
     public OrderServiceImpl(OrderRepository repository) {
         this.orderRepository = repository;
     }
@@ -44,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
     }
     @Override
     public void createOrder(List<OrderItem> itemList) {
-        Order newOrder = new Order("TBD", "TBD", "TBD", "TBD", itemList);
+        Order newOrder = new Order("TBD", "TBD", "TBD", "TBD", "TBD",itemList);
         this.orderRepository.save(newOrder);
     }
 
@@ -52,6 +57,16 @@ public class OrderServiceImpl implements OrderService {
     public Order getOrder(String id) {
         return this.orderRepository.findById(id);
     }
-
+    @Override
+    public boolean addOrderEvent(OrderEvent orderEvent) {
+        boolean result = false;
+        try {
+            this.orderEventRepository.save(orderEvent);
+            result = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
 }

@@ -4,10 +4,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
+
 
 
 /**
@@ -15,15 +16,12 @@ import java.util.List;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
-@Entity
 @NoArgsConstructor
-@Table(name = "ORDER")
+@Document
 public class Order {
     @Id
     private String id;
 
-    //private Menu menu;
-    @Embedded
     //Name of the customer
     private String customerName;
     //ID used to find the restaurant, if there are multiple restaurants with the same name
@@ -44,13 +42,22 @@ public class Order {
                       @JsonProperty("providerID") String providerID,
                       @JsonProperty("instruction") String instruction,
                       @JsonProperty("address") String address,
-                 List<OrderItem> content) {
+                 @JsonProperty("list") List<OrderItem> content) {
         this.id = id;
         this.customerName = customerName;
         this.instruction= instruction;
         this.providerID = providerID;
         this.address = address;
         this.content = content;
+        this.total = calculateTotal();
+    }
+
+    private double calculateTotal() {
+        double ret = 0.0;
+        for (OrderItem item : content) {
+            ret += item.getPrice();
+        }
+        return total;
     }
 
 }

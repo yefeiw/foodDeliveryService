@@ -1,6 +1,7 @@
 package demo.rest;
 
 import demo.domain.Order;
+import demo.domain.OrderEvent;
 import demo.domain.OrderItem;
 import demo.service.OrderService;
 import org.slf4j.Logger;
@@ -8,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -57,5 +60,9 @@ public class OrderServiceRestController {
         order.setStatus(status);
         this.orderService.save(order);
     }
-
+    @RequestMapping(value = "/orders/events", method = RequestMethod.POST)
+    public ResponseEntity addOrderEvent(@RequestBody OrderEvent orderEvent) {
+        boolean result = orderService.addOrderEvent(orderEvent);
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
 }

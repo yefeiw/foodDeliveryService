@@ -2,6 +2,9 @@
 /Users/yefeiw/projects/order-service/src/main/java/demo/rest/OrderServiceRestController.java
 /Users/yefeiw/projects/order-service/src/main/java/demo/service/OrderServiceImpl.java
 /Users/yefeiw/projects/order-service/src/main/java/demo/domain/OrderRepository.java
+/Users/yefeiw/projects/order-service/src/main/java/demo/domain/OrderEventRepository.java
 /Users/yefeiw/projects/order-service/src/main/java/demo/domain/Order.java
 /Users/yefeiw/projects/order-service/src/main/java/demo/domain/OrderItem.java
 /Users/yefeiw/projects/order-service/src/main/java/demo/OrderServiceApplication.java
+/Users/yefeiw/projects/order-service/src/main/java/demo/domain/OrderEvent.java
+/Users/yefeiw/projects/order-service/src/main/java/demo/domain/OrderEventType.java

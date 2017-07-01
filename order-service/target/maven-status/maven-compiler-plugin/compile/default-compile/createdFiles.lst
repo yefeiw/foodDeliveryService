@@ -1,5 +1,10 @@
-demo/domain/OrderRepository.class
+demo/domain/OrderEvent.class
+demo/OrderServiceApplication.class
 demo/domain/OrderItem.class
-demo/rest/OrderServiceRestController.class
 demo/domain/Order.class
 demo/service/OrderService.class
+demo/domain/OrderEventRepository.class
+demo/domain/OrderRepository.class
+demo/domain/OrderEventType.class
+demo/rest/OrderServiceRestController.class
+demo/service/OrderServiceImpl.class
