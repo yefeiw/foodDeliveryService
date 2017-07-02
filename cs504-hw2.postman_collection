@@ -1,0 +1,124 @@
+{
+	"variables": [],
+	"info": {
+		"name": "cs504:hw2",
+		"_postman_id": "d5d3b1dc-df90-9154-8b5b-c5df64be4d45",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:9001/order",
+			"request": {
+				"url": "localhost:9001/order",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n {\n \"id\": \"55667788\",\n \"name\": \"john\",\n \"providerId\": \"11223344\",\n \"Instruction\": \"Vegetarian\",\n \"address\": \"504 CS Street, Mountain View, CA 88888\",\n  \"list\":[\n  \t{\n  \t\t\"name\":\"kung pao chicken\",\n  \t\t\"providerId\":\"11223344\",\n  \t\t\"notice\":\"no chicken\",\n  \t\t\"price\":7.95\n  \t}\n  \t]\n }\n \n"
+				},
+				"description": "order creation test"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:9001/order",
+			"request": {
+				"url": "localhost:9001/order",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n {\n \"id\": \"55667788\",\n \"name\": \"john\",\n \"providerId\": \"11223344\",\n \"Instruction\": \"Vegetarian\",\n \"address\": \"504 CS Street, Mountain View, CA 88888\",\n  \"list\":[\n  \t{\n  \t\t\"name\":\"kung pao chicken\",\n  \t\t\"providerId\":\"11223344\",\n  \t\t\"notice\":\"no chicken\",\n  \t\t\"price\":7.95\n  \t}\n  \t]\n }\n \n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:9001/order",
+			"request": {
+				"url": "localhost:9001/order",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n {\n \"id\": \"55667788\",\n \"name\": \"john\",\n \"providerId\": \"11223344\",\n \"Instruction\": \"Vegetarian\",\n \"address\": \"504 CS Street, Mountain View, CA 88888\",\n  \"list\":[\n  \t{\n  \t\t\"name\":\"kung pao chicken\",\n  \t\t\"providerId\":\"11223344\",\n  \t\t\"notice\":\"no chicken\",\n  \t\t\"price\":7.95\n  \t}\n  \t]\n }\n \n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:9002/payment",
+			"request": {
+				"url": "localhost:9002/payment",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:9002/payment",
+			"request": {
+				"url": "localhost:9002/payment",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:9100/provider",
+			"request": {
+				"url": "localhost:9100/provider",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n{\n\t\"name\":\"KoryoKwan\",\n\t\"id\":\"11223344\",\n\t\"description\":\"Traditional Cuisine\",\n\t\"address\":\"2222 Fuller Ct. Ann Arbor MI 48105\",\n\t\"menu\":[\n\t\t{\n\t\t\t\"name\":\"mulnyangmeun\",\n\t\t\t\"description\":\"bucketwheat cold noodles\",\n\t\t\t\"price\":7.24\n\t\t}\n\t\t]\n}\n]"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:9100/provider",
+			"request": {
+				"url": "localhost:9100/provider",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

@@ -1,5 +1,6 @@
 package demo.rest;
 
+import demo.domain.CardInfo;
 import demo.domain.Invoice;
 import demo.domain.Payment;
 import demo.domain.PaymentStatus;
@@ -10,6 +11,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.smartcardio.Card;
 
 @RestController
 public class PaymentServiceRestController {
@@ -50,9 +53,9 @@ public class PaymentServiceRestController {
 
 
     @RequestMapping(value = "/payment/{paymentId}", method = RequestMethod.PUT)
-    public HttpStatus Payment(@PathVariable String paymentId) {
+    public HttpStatus Payment(@PathVariable String paymentId, @RequestBody CardInfo info) {
        Payment payment =  paymentService.getPaymentById(paymentId);
-       paymentService.fulfillPayment(payment);
+       paymentService.fulfillPayment(payment,info);
        return HttpStatus.OK;
     }
 

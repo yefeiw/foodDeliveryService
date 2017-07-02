@@ -15,6 +15,7 @@ public class Payment {
     private String orderId;
     private PaymentStatus paymentStatus;
 
+    private CardInfo info;
     public Payment(String orderId) {
         this.orderId = orderId;
         this.paymentStatus = PaymentStatus.PROCESSING;

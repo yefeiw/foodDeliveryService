@@ -1,5 +1,6 @@
 package demo.service;
 
+import demo.domain.CardInfo;
 import demo.domain.Invoice;
 import demo.domain.Payment;
 import org.springframework.data.domain.Page;
@@ -11,6 +12,6 @@ public interface PaymentService {
     Page<Payment> findAll(Pageable pageable);
     void deleteAll();
     Payment createPayment(Invoice invoice);
-    void fulfillPayment(Payment payment);
+    void fulfillPayment(Payment payment, CardInfo info);
 
 }

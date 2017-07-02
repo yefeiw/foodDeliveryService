@@ -32,7 +32,7 @@ public class Order {
     private String providerId;
     //Special Instructions
     private String instruction;
-    //Location information of the restaurant
+    //Delivery Address;
     private String address;
     //Total value of this order;
     private double total;
@@ -40,6 +40,8 @@ public class Order {
     OrderStatus status;
     //Content of this order
     List<OrderItem> content;
+    //estimated delivery time in minutes
+    private double deliveryTimeMinute;
     @JsonCreator
     public Order(@JsonProperty("id")String id,
                         @JsonProperty("name") String customerName,
@@ -55,6 +57,8 @@ public class Order {
         this.content = content;
         this.total = calculateTotal();
         this.status = OrderStatus.PENDING;
+        //initial value: 24 hours = 1440 minutes
+        this.deliveryTimeMinute = 1440;
     }
 
     private double calculateTotal() {

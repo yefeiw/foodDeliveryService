@@ -1,3 +1,4 @@
+demo/domain/CardInfo.class
 demo/domain/OrderEvent.class
 demo/PaymentServiceApplication.class
 demo/domain/PaymentRepository.class

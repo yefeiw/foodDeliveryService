@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.smartcardio.Card;
 import java.io.IOException;
 import java.util.Random;
 import java.util.concurrent.TimeoutException;
@@ -50,16 +51,22 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public void fulfillPayment(Payment payment) {
+    public void fulfillPayment(Payment payment, CardInfo info) {
         try {
-            //determine the payment status randomly
-            int i = new Random().nextInt(2);
-            if (i == 0) {
-                System.out.println("Payment succeeded");
-                payment.setPaymentStatus(PaymentStatus.APPROVED);
-            } else {
-                System.out.println("Payment failed");
+            //validate card
+            if (!validateCard(info)) {
+                System.out.println("Card information not valid, will reject now");
                 payment.setPaymentStatus(PaymentStatus.DECLINED);
+            } else {
+                //determine the payment status randomly
+                int i = new Random().nextInt(2);
+                if (i == 0) {
+                    System.out.println("Payment succeeded");
+                    payment.setPaymentStatus(PaymentStatus.APPROVED);
+                } else {
+                    System.out.println("Payment failed");
+                    payment.setPaymentStatus(PaymentStatus.DECLINED);
+                }
             }
             OrderEvent orderEvent = new OrderEvent(payment);
             RestTemplate restTemplate = new RestTemplate();
@@ -70,6 +77,13 @@ public class PaymentServiceImpl implements PaymentService {
             e.printStackTrace();
         }
     }
+
+    private boolean validateCard(CardInfo info) {
+        //In reality, it will be put to card service
+        //Here we are returning dummy values.
+        return info.isValid();
+    }
+
 
 
 }

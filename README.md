@@ -1,5 +1,5 @@
 # Food Delivery Service
-Yefei Wang
+
 
 ## Introduction
 This project is a Java implementation of the backend of a food delivery service. 
@@ -33,6 +33,8 @@ It is up to the restaurant to determine how the payment will be delivered. (Rese
 The delivery service merely informs the restaurant of the restrictions.
 (There is a lot of opportunity to enhance here for better user experience, but again, this is reserved for future enhancement)
 
+1. Delivery time will never reach 24 hours
+
 ## Structure
 
 This section covers the structures of the project. Note that there are many domains each having its own structure. 
@@ -41,17 +43,23 @@ The will be introduced one by one.
 ### Key Domains 
 There are these several key domains in this project:
 
-1. demo.domain.Restaurant 
+1. Restaurant 
 
-The restaurant is associated to one menu with multiple items. It stores all completed payment and provides estimated delivery time.
+The restaurant is associated to one menu with multiple items. 
 
 2. Order 
 
-Each payment contains the items ordered, quantity and unit price for each, address of the customer and the restaurant, and special instructions.
+Each order contains the items ordered, quantity and the total prices, address of the customer and the restaurant, and special instructions.
+
+When the order is created, it enters a pending state and payment service will be notified.
+
+When the order is completed, the delivery time will be shown as part of the order
 
 3. Payment
 
-Each payment has a payment ID and a timestamp. If the payment is not successful for any reason, the payment ID will be an empty string.
+Each payment is mapped 1-to-1 to the order.  Each payment will be consumed internally and will randomly be successful or failed. 
+
+When a payment is updated, the status (success or failure) will notify order service to update the relevant order ID.
 
 ### Rest API Diagram
 * Note: The optional parameters are listed as()
@@ -64,10 +72,10 @@ Each payment has a payment ID and a timestamp. If the payment is not successful 
 | /provider/{id}  	|  Get the information of the one restaurant 	| 404  	| modify the information of the current restaurant  	|  remove this restaurant from the database 	|
 | **Order**  	|   	|   	|   	|   	|
 |/payment| Get all orders in the database| Add the attached orders to the database| 404 |purge all orders from the database|
-|/payment/{id}| Get the payment matching the ID| 404 | modify this payment| remove this payment 
+|/payment/{id}| Get the order matching the ID| 404 | update this order|  remove this order 
 |**Payment**|  |  |  |  |
-|/payment| Get all payments | Add the attached payments| 404 | purge all payments|
-|/payment/{id}|Get information on the one payment| 404 | modify this payment |remove this payment
+|/payment| Get all payments | Add the attached one payment| 404 | purge all payments|
+|/payment/{id}|Get information on the one payment| 404 | modify this payment | 404
 
 
 ## Build, Run and Test
@@ -77,11 +85,47 @@ This sections covers the information to build, run and test this app.
 
 dependency: maven
 ```
-cd <project_root>
+cd <project_root>/<each_service>
 mvn clean install
 ```
 
+### Run
+
+dependency: mongoDB (located in the docker-compose.xml)
+
+```
+docker-compose up
+
+```
+
+steps
+* start edge service first
+```
+source run-edge-service.sh
+```
+
+* restaurant service is not coupled with any other service, able to run independently
+```
+source run-restaurant-service.sh
+```
+
+* payment service and order service are coupled
+```
+source run-payment-and-order-services.sh
+```
+
+### Test
+
+Issue query similar as the postman scripts: cs504-hw2.postman_collection.
 
 ### Notes
 
-1. 
+1. The most note worthy issue in this project is the communication between micro services.
+
+1. I chose to use Mongodb, switching from h2/mysql for the following reasons:
+        
+        1. MongoDB suits this project where no sorting is required.
+        
+        2. MongoDB is straight forward to setup. There are not many mapping relationships in this project.
+1. I used several postman query sets to test this project after JPA unit tests. I need to find a way to better test the MongoDB related projects.
+

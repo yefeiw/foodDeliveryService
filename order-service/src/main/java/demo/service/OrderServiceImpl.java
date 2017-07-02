@@ -11,10 +11,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.xml.transform.Result;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by yefeiw on 6/25/17.
@@ -93,6 +90,7 @@ public class OrderServiceImpl implements OrderService {
             System.out.println("Payment succeeded");
             order.setStatus(Order.OrderStatus.APPROVED);
             //Set delivery time
+            order.setDeliveryTimeMinute(new Random().nextInt(60));
         } else {
             System.out.println("Order failed with status "+result);
             order.setStatus(Order.OrderStatus.REJECTED);
