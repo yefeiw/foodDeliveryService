@@ -72,7 +72,7 @@ When a payment is updated, the status (success or failure) will notify order ser
 | /provider/{id}  	|  Get the information of the one restaurant 	| 404  	| modify the information of the current restaurant  	|  remove this restaurant from the database 	|
 | **Order**  	|   	|   	|   	|   	|
 |/payment| Get all orders in the database| Add the attached orders to the database| 404 |purge all orders from the database|
-|/payment/{id}| Get the order matching the ID| 404 | update this order|  remove this order 
+|/payment/{id}| Get the order matching the ID| 404 | update this order| 404 
 |**Payment**|  |  |  |  |
 |/payment| Get all payments | Add the attached one payment| 404 | purge all payments|
 |/payment/{id}|Get information on the one payment| 404 | modify this payment | 404
