@@ -18,15 +18,17 @@ import java.util.concurrent.TimeoutException;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
-
-    private final static String ORDER_EVENT_URL = "https://localhost:8080/order-service/order/events";
+    private final static String ORDER_EVENT_URL = "http://localhost:9001/order/event";
     private PaymentRepository paymentRepository;
 
     @Autowired
     public PaymentServiceImpl(PaymentRepository paymentRepository) {
         this.paymentRepository = paymentRepository;
     }
-
+    @Override
+    public Payment getPaymentByOrderId(String id) {
+        return paymentRepository.findByOrderId(id);
+    }
     @Override
     public Payment getPaymentById(String id) {
         return paymentRepository.findById(id);
@@ -36,11 +38,21 @@ public class PaymentServiceImpl implements PaymentService {
         return paymentRepository.findAll(pageable);
     }
     @Override
-    public String createPayment(Invoice invoice) {
-        String paymentId = null;
+    public void deleteAll() {
+        paymentRepository.deleteAll();
+    }
+    @Override
+    public Payment createPayment(Invoice invoice) {
         Payment payment = new Payment(invoice.getOrderId());
+        paymentRepository.save(payment);
+        System.out.println("Payment created with ID "+payment.getId() + " for order "+payment.getOrderId());
+        return payment;
+    }
+
+    @Override
+    public void fulfillPayment(Payment payment) {
         try {
-            //first, determine the payment status randomly
+            //determine the payment status randomly
             int i = new Random().nextInt(2);
             if (i == 0) {
                 System.out.println("Payment succeeded");
@@ -49,21 +61,14 @@ public class PaymentServiceImpl implements PaymentService {
                 System.out.println("Payment failed");
                 payment.setPaymentStatus(PaymentStatus.DECLINED);
             }
-            //second, send the payment to order events
             OrderEvent orderEvent = new OrderEvent(payment);
             RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity response = restTemplate.postForObject(ORDER_EVENT_URL, orderEvent, ResponseEntity.class);
-            if (response.getStatusCode().equals(HttpStatus.CREATED)) {
-                this.paymentRepository.save(payment);
-            } else {
-                System.out.println("Payments with id "+payment.getId() +" failed");
-            }
+            restTemplate.postForObject(ORDER_EVENT_URL, orderEvent, ResponseEntity.class);
+            System.out.println("Payment processing finished for id "+payment.getId());
+            this.paymentRepository.save(payment);
         } catch (Exception e) {
             e.printStackTrace();
-            return paymentId;
         }
-        paymentId = payment.getId();
-        return paymentId;
     }
 
 

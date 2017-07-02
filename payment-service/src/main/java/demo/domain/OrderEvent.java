@@ -11,8 +11,13 @@ import java.util.Date;
 @Data
 @Document
 public class OrderEvent {
-    private enum OrderEventType {
-        PAY, APPROVE, DECLINE
+    public enum OrderEventType {
+        //This order has been created and no responses has been received.
+        PROCESSING,
+        //This order has been successfully created.
+        SUCCEED,
+        //This order has failed to be processed.
+        FAILURE;
     }
 
     @Id
@@ -23,9 +28,9 @@ public class OrderEvent {
     public OrderEvent(Payment payment) {
         this.orderId = payment.getOrderId();
         if (payment.getPaymentStatus().equals(PaymentStatus.APPROVED)) {
-            this.type = OrderEventType.APPROVE;
+            this.type = OrderEventType.SUCCEED;
         } else if (payment.getPaymentStatus().equals(PaymentStatus.DECLINED)) {
-            this.type = OrderEventType.DECLINE;
+            this.type = OrderEventType.FAILURE;
         } else {
             throw new IllegalArgumentException("Illegal payment status " + payment.getPaymentStatus());
         }

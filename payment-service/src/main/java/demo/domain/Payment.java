@@ -17,13 +17,7 @@ public class Payment {
 
     public Payment(String orderId) {
         this.orderId = orderId;
-    }
-    @Override
-    public String toString() {
-        return "Payment {" +
-                "paymentId='" + id + '\'' +
-                "orderId='" + orderId + '\'' +
-                "paymentStatus='" + paymentStatus.toString() + '\'';
+        this.paymentStatus = PaymentStatus.PROCESSING;
     }
 }
 

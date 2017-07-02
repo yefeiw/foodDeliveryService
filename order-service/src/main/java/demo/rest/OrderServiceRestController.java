@@ -2,7 +2,6 @@ package demo.rest;
 
 import demo.domain.Order;
 import demo.domain.OrderEvent;
-import demo.domain.OrderItem;
 import demo.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Created by yefeiw on 6/25/17.
@@ -39,9 +36,11 @@ public class OrderServiceRestController {
         return orderService.findById(id);
     }
 
+
     @RequestMapping(value = "/order", method = RequestMethod.POST)
-    void CreateOrder(@RequestBody  Order payload) {
-       this.orderService.createOrder(payload);
+    HttpStatus CreateOrder(@RequestBody  Order payload) {
+        this.orderService.createOrder(payload);
+            return HttpStatus.OK;
     }
 
     @RequestMapping(value = "/order", method = RequestMethod.DELETE)
@@ -54,15 +53,9 @@ public class OrderServiceRestController {
         orderService.deleteById(id);
     }
 
-    @RequestMapping(value = "order/{id}", method = RequestMethod.PUT)
-    void modifyByid(@PathVariable(value = "id")String id, @RequestBody int status) {
-        Order order = this.orderService.getOrder(id);
-        order.setStatus(status);
-        this.orderService.save(order);
-    }
     @RequestMapping(value = "/order/event", method = RequestMethod.POST)
-    public ResponseEntity addOrderEvent(@RequestBody OrderEvent orderEvent) {
-        orderService.addOrderEvent(orderEvent);
+    public ResponseEntity processOrderEvent(@RequestBody OrderEvent orderEvent) {
+        orderService.processOrderEvent(orderEvent);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 }

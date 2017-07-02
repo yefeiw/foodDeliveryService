@@ -1,5 +1,5 @@
 package demo.domain;
 
 public enum PaymentStatus {
-    APPROVED,DECLINED
+    PROCESSING,APPROVED,DECLINED
 }

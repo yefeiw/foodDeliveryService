@@ -5,14 +5,17 @@ import demo.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by yefeiw on 6/23/17.
  */
 @RestController
 public class RestaurantRestController {
-    private final int defaultPageSize = 10;
-
+    private final String defaultPageSize = "10";
+    private final String defaultPageNum = "0";
     @Autowired
     private RestaurantService restaurantService;
 
@@ -23,13 +26,12 @@ public class RestaurantRestController {
 
     @RequestMapping(value = "/provider", method = RequestMethod.GET)
     Page<Restaurant> findAll(@RequestParam(value = "name", required = false) String name,
-                             @RequestParam(value = "page") int page,
-                             @RequestParam(value = "size", required = false) Integer size) {
-        int pageSize = (size == null) ? defaultPageSize : size;
+                             @RequestParam(value = "page", required = false, defaultValue = defaultPageNum) int page,
+                             @RequestParam(value = "size", required = false,defaultValue = defaultPageSize) Integer size) {
         if (name != null) {
-            return restaurantService.findByName(name, new PageRequest(page, pageSize));
+            return restaurantService.findByName(name, new PageRequest(page, size));
         } else {
-            return restaurantService.findAll(new PageRequest(page, pageSize));
+            return restaurantService.findAll(new PageRequest(page, size));
         }
     }
 

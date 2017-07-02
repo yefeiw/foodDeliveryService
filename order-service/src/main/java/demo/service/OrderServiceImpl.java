@@ -1,22 +1,27 @@
 package demo.service;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import demo.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.xml.transform.Result;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yefeiw on 6/25/17.
  */
 @Service
 public class OrderServiceImpl implements OrderService {
-    private final static String PAYMENT_URL = "https://localhost:9002/payment";
+    private final static String PAYMENT_URL = "http://localhost:9002/payment";
     @Autowired
     private OrderRepository orderRepository;
     private OrderEventRepository orderEventRepository;
@@ -52,28 +57,49 @@ public class OrderServiceImpl implements OrderService {
     }
     @Override
     public void createOrder(Order order) {
-        //step 1. Save the order to the database.
-        this.orderRepository.save(order);
+
         //step2. Start paying the order
-        Invoice invoice = new Invoice(order.getId(),order.getTotal());
+        HttpEntity<Invoice> request = new HttpEntity<>(new Invoice(order.getId(),order.getTotal()));
+
+        System.out.println("creating invoice for order "+order.getId()+" of total price "+order.getTotal());
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity response = restTemplate.postForObject(PAYMENT_URL,invoice, ResponseEntity.class);
+        Map<String, String> vars = new HashMap<String,String>();
+        vars.put("orderID",order.getId());
+        try {
+
+            Invoice comm = restTemplate.postForObject(PAYMENT_URL, request, Invoice.class);
+            assert(comm != null);
+            assert(comm.getOrderId().equals(order.getId()));
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+        this.orderRepository.save(order);
     }
 
     @Override
     public Order getOrder(String id) {
         return this.orderRepository.findById(id);
     }
-    @Override
-    public boolean addOrderEvent(OrderEvent orderEvent) {
-        boolean result = false;
-        try {
-            this.orderEventRepository.save(orderEvent);
-            result = true;
-        } catch (Exception e) {
-            e.printStackTrace();
+    //This is reserved for future enhancement
+    public boolean processOrderEvent(OrderEvent orderEvent) {
+        System.out.println("Processing order event "+orderEvent.getOrderId() +" with status "+orderEvent.getType());
+        Order order = this.orderRepository.findById(orderEvent.getOrderId());
+        if (order == null || order.getStatus() != Order.OrderStatus.PENDING) {
+            System.out.println("order not found or already processed, discarding request");
+            return false;
         }
-        return result;
+        OrderEventType result = orderEvent.getType();
+        if (result == OrderEventType.SUCCEED) {
+            System.out.println("Payment succeeded");
+            order.setStatus(Order.OrderStatus.APPROVED);
+            //Set delivery time
+        } else {
+            System.out.println("Order failed with status "+result);
+            order.setStatus(Order.OrderStatus.REJECTED);
+        }
+        //save to repo to preserve effects.
+        orderRepository.save(order);
+        return true;
     }
 
 }

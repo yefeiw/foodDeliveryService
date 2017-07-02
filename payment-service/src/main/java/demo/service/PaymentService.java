@@ -7,7 +7,10 @@ import org.springframework.data.domain.Pageable;
 
 public interface PaymentService {
     Payment getPaymentById(String id);
+    Payment getPaymentByOrderId(String orderId);
     Page<Payment> findAll(Pageable pageable);
-    String createPayment(Invoice invoice);
+    void deleteAll();
+    Payment createPayment(Invoice invoice);
+    void fulfillPayment(Payment payment);
 
 }

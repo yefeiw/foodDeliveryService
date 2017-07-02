@@ -12,6 +12,7 @@ import java.util.List;
  * Created by yefeiw on 6/25/17.
  */
 public interface OrderService {
+
     Order getOrder(String id);
     Page<Order> findAll(Pageable pageable);
     Order findById(String id);
@@ -19,5 +20,5 @@ public interface OrderService {
     void deleteById(String id);
     void save(Order order);
     void createOrder(Order order);
-    boolean addOrderEvent(OrderEvent orderEvent);
+    boolean processOrderEvent(OrderEvent orderEvent);
 }

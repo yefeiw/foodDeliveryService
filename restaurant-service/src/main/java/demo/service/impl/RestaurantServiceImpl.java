@@ -1,5 +1,6 @@
 package demo.service.impl;
 
+import demo.domain.MenuItem;
 import demo.domain.Restaurant;
 import demo.domain.RestaurantRepository;
 import demo.service.RestaurantService;
@@ -36,12 +37,8 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Page<Restaurant> findByName(String name, Pageable pageable) {
         return repository.findAllByName(name, pageable);
     }
-    @Override
-    public void addMenuItem(String providerID, Request request) {
-        List<MenuItem> menu = request.getItems();
-        Restaurant restaurant = this.repository.findByProviderID(providerID);
-        restaurant.
-    }
+
+
     @Override
     public List<Restaurant> saveRestaurants(List<Restaurant> restaurantList) {
         return repository.save(restaurantList);

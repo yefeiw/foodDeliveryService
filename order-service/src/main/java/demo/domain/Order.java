@@ -19,6 +19,10 @@ import java.util.List;
 @NoArgsConstructor
 @Document
 public class Order {
+    public enum OrderStatus {
+        PENDING,
+        APPROVED, REJECTED;
+    }
     @Id
     private String id;
 
@@ -33,7 +37,7 @@ public class Order {
     //Total value of this order;
     private double total;
     // Status of this order
-    int status;
+    OrderStatus status;
     //Content of this order
     List<OrderItem> content;
     @JsonCreator
@@ -50,6 +54,7 @@ public class Order {
         this.address = address;
         this.content = content;
         this.total = calculateTotal();
+        this.status = OrderStatus.PENDING;
     }
 
     private double calculateTotal() {
