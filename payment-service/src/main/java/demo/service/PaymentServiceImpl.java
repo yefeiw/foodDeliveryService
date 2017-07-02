@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.smartcardio.Card;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.TimeoutException;
 
@@ -72,6 +73,7 @@ public class PaymentServiceImpl implements PaymentService {
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.postForObject(ORDER_EVENT_URL, orderEvent, ResponseEntity.class);
             System.out.println("Payment processing finished for id "+payment.getId());
+            payment.setTimestamp(new Date());
             this.paymentRepository.save(payment);
         } catch (Exception e) {
             e.printStackTrace();
