@@ -119,6 +119,26 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "localhost:9002/payment/5958950877c857cf9ebc1259",
+			"request": {
+				"url": "localhost:9002/payment/5958950877c857cf9ebc1259",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"number\":\"123445676789\",\n\t\"exp\":\"05/20\",\n\t\"cvc\":\"456\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }
